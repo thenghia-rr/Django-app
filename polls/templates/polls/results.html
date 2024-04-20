@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results</title>
+    <style>
+        body {
+            background: rgb(66, 141, 199);
+        }
+
+        .links {
+            display: flex;
+            list-style: none;
+            justify-content: space-between;
+        }
+
+        .links li {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <ul class="links">
+                <li><a href="http://localhost:8000/">Home</a></li>
+                <li><a href="http://localhost:8000/polls">Polls</a></li>
+                <li><a href="http://localhost:8000/polls/about">About</a></li>
+                <li><a href="http://localhost:8000/admin">Admin</a></li>
+                <ul>
+        </div>
+    </header>
+    <!-- ----------------------------------------------------------------------- -->
+
+    <h1>{{ question.question_text }}</h1>
+
+    <ul>
+        {% for choice in question.choice_set.all %}
+        <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'polls:detail' question.id %}">Vote again?</a>
+
+</body>
+
+</html>

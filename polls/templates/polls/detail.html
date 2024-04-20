@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail question</title>
+    <style>
+        body {
+            background: rgb(66, 141, 199);
+        }
+
+        .links {
+            display: flex;
+            list-style: none;
+            justify-content: space-between;
+        }
+
+        .links li {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <ul class="links">
+                <li><a href="http://localhost:8000/">Home</a></li>
+                <li><a href="http://localhost:8000/polls">Polls</a></li>
+                <li><a href="http://localhost:8000/polls/about">About</a></li>
+                <li><a href="http://localhost:8000/admin">Admin</a></li>
+            <ul>
+        </div>
+    </header>
+
+    <!-- ----------------------------------------------------------------------- -->
+    <!-- <h1> Question {{ question.id }}:  {{ question.question_text }}</h1>
+    <ul>
+        {% for choice in question.choice_set.all %}
+        <li>Choice: {{ choice.choice_text }}</li>
+        {% endfor %}
+    </ul> -->
+    <!-- ----------------------------------------------------------------------- -->
+
+    <form action="{% url 'polls:vote' question.id %}" method="post">
+        {% csrf_token %}
+        <fieldset>
+            <legend>
+                <h1>Question {{question.id}}: {{ question.question_text }}</h1>
+            </legend>
+            {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+            {% for choice in question.choice_set.all %}
+            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+            {% endfor %}
+        </fieldset>
+        <input type="submit" value="Vote">
+    </form>
+</body>
+
+</html>
